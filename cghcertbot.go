@@ -194,7 +194,7 @@ func read() error {
 		}
 	}()
 	botdata.Hosts = nil
-	b, err := ioutil.ReadFile("botdata.json")
+	b, err := ioutil.ReadFile(dataFile)
 	if err != nil {
 		return err
 	}
@@ -206,17 +206,21 @@ func write() error {
 	if err != nil {
 		return err
 	}
-	if err := ioutil.WriteFile("botdata.json", b, 0644); err != nil {
+	if err := ioutil.WriteFile(dataFile, b, 0644); err != nil {
 		return err
 	}
 	return nil
 }
 
-var isSummarize bool
+var (
+	isSummarize bool
+	dataFile    string
+)
 
 func init() {
 	read()
 	flag.BoolVar(&isSummarize, "summarize", false, "send summarized messages to users and exit")
+	flag.StringVar(&dataFile, "data", "botdata.json", "data file location")
 }
 
 func main() {
