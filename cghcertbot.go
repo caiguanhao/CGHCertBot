@@ -218,7 +218,6 @@ var (
 )
 
 func init() {
-	read()
 	flag.BoolVar(&isSummarize, "summarize", false, "send summarized messages to users and exit")
 	flag.StringVar(&dataFile, "data", "botdata.json", "data file location")
 }
@@ -231,6 +230,8 @@ func main() {
 		log.Panic(err)
 	}
 	bot.Debug = false
+
+	read()
 
 	if isSummarize {
 		for userId := range botdata.Hosts {
